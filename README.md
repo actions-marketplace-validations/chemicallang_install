@@ -33,6 +33,7 @@ jobs:
 | Name | Description | Default |
 |------|-------------|---------|
 | `version` | The version of Chemical to install. Set to `latest` to automatically fetch the most recent release. | `latest` |
+| `variant` | The variant of Chemical to install (e.g., `tcc`). | (empty) |
 
 ## Environment Variables
 This action sets the following environment variables for subsequent steps:

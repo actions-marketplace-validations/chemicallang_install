@@ -6,6 +6,10 @@ inputs:
     description: 'Version of Chemical to install (e.g., v0.0.30, or "latest")'
     required: false
     default: 'latest'
+  variant:
+    description: 'Variant of Chemical to install (e.g., lsp, tcc, or leave empty)'
+    required: false
+    default: ''
 runs:
   using: 'composite'
   steps:
@@ -13,6 +17,7 @@ runs:
       shell: bash
       env:
         VERSION: ${{ inputs.version }}
+        VARIANT: ${{ inputs.variant }}
       run: |
         curl -sSL https://raw.githubusercontent.com/chemicallang/chemical/main/scripts/download.sh | bash
         
