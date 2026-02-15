@@ -11,37 +11,19 @@ runs:
   steps:
     - name: Download and Install Chemical
       shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
       run: |
-        VERSION_INPUT="${{ inputs.version }}"
-        if [ "$VERSION_INPUT" = "latest" ]; then
-          echo "Fetching latest version tag..."
-          # Use git to fetch tags as requested (guaranteed to be on GitHub runners)
-          LATEST_TAG=$(git ls-remote --tags --sort="v:refname" https://github.com/chemicallang/chemical.git | tail -n1 | awk '{print $2}' | cut -d/ -f3)
-          if [ -z "$LATEST_TAG" ]; then
-             echo "Warning: Could not fetch latest tag from git, falling back to v0.0.30"
-             export VERSION="v0.0.30"
-          else
-             echo "Latest version found: $LATEST_TAG"
-             export VERSION="$LATEST_TAG"
-          fi
-        else
-          export VERSION="$VERSION_INPUT"
-        fi
-        
-        echo "Installing Chemical version $VERSION..."
         curl -sSL https://raw.githubusercontent.com/chemicallang/chemical/main/scripts/download.sh | bash
         
         # Robust path detection for both Linux and Windows runners
         if [ -d "/opt/chemical" ]; then
-          echo "Adding /opt/chemical to PATH"
           echo "/opt/chemical" >> $GITHUB_PATH
           echo "CHEMICAL_HOME=/opt/chemical" >> $GITHUB_ENV
         elif [ -d "$USERPROFILE/.chemical" ]; then
-          echo "Adding $USERPROFILE/.chemical to PATH"
           echo "$USERPROFILE/.chemical" >> $GITHUB_PATH
           echo "CHEMICAL_HOME=$USERPROFILE/.chemical" >> $GITHUB_ENV
         elif [ -d "$HOME/.chemical" ]; then
-          echo "Adding $HOME/.chemical to PATH"
           echo "$HOME/.chemical" >> $GITHUB_PATH
           echo "CHEMICAL_HOME=$HOME/.chemical" >> $GITHUB_ENV
         fi
