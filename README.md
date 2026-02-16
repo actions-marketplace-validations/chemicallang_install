@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Setup Chemical
-        uses: chemicallang/action@v1 # or @main
+        uses: chemicallang/install@v1.1 # or @main
         with:
           version: 'latest' # Optional: Specify a tag like 'v0.0.30'
           
@@ -30,10 +30,10 @@ jobs:
 
 ## Inputs
 
-| Name | Description | Default |
-|------|-------------|---------|
+| Name      | Description                                                                                         | Default  |
+|-----------|-----------------------------------------------------------------------------------------------------|----------|
 | `version` | The version of Chemical to install. Set to `latest` to automatically fetch the most recent release. | `latest` |
-| `variant` | The variant of Chemical to install (e.g., `tcc`). | (empty) |
+| `variant` | The variant of Chemical to install (e.g., `tcc`).                                                   | (empty)  |
 
 ## Environment Variables
 This action sets the following environment variables for subsequent steps:
